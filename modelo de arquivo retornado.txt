@@ -1,0 +1,30 @@
+<entidades>
+
+	<reserva1>
+		<id></>
+		<id_usuario></>
+		<id_laboratorio></>
+		<id_grupoEstudo></>
+		<inicio></>
+		<fim></>
+	</reserva1>
+	
+	<reserva2>
+		<id></>
+		<id_usuario></>
+		<id_laboratorio></>
+		<id_grupoEstudo></>
+		<inicio></>
+		<fim></>
+	</reserva2>
+	
+	<reserva3>
+		<id></>
+		<id_usuario></>
+		<id_laboratorio></>
+		<id_grupoEstudo></>
+		<inicio></>
+		<fim></>
+	</reserva3>
+
+</entidades>
