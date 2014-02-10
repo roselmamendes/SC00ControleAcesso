@@ -23,18 +23,21 @@ public class DBHelper extends SQLiteOpenHelper {
 	 * @param context
 	 * @return
 	 */
-	public static DBHelper obtemInstancia(Context context){
+	public static void obtemInstancia(Context context){
 		
 		if(banco == null)
 			banco = new DBHelper(context);
 		
-		return banco;
 	}
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
 		db.execSQL(DBLaboratorios.CRIA_TABELA_LABORATORIOS);
+		db.execSQL(DBGrupoEstudo.CRIA_TABELA_GRUPOESTUDO);
+		db.execSQL(DBPerfil.CRIA_TABELA_PERFIL);
+		db.execSQL(DBReservas.CRIA_TABELA_RESERVA);
+		db.execSQL(DBUsuario.CRIA_TABELA_USUARIO);
 
 	}
 
@@ -42,6 +45,10 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
 		
 		db.execSQL("DROP TABLE IF EXISTS " + DBLaboratorios.TABELA_LABORATORIOS);
+		db.execSQL("DROP TABLE IF EXISTS " + DBGrupoEstudo.TABELA_GRUPOESTUDO);
+		db.execSQL("DROP TABLE IF EXISTS " + DBPerfil.TABELA_PERFIL);
+		db.execSQL("DROP TABLE IF EXISTS " + DBReservas.TABELA_RESERVA);
+		db.execSQL("DROP TABLE IF EXISTS " + DBUsuario.TABELA_USUARIO);
 		
 		onCreate(db);
 

@@ -58,6 +58,7 @@ public class DBUsuario implements DBInterface<Usuario> {
 		
 		SQLiteDatabase dbLeitor = DBHelper.banco.getReadableDatabase();
 		 String where = CODUSUARIO + "=" + chave[0];
+		 
 		 dbLeitor.delete(TABELA_USUARIO, where, null);
 		 dbLeitor.close();
 		return 1;
@@ -67,17 +68,32 @@ public class DBUsuario implements DBInterface<Usuario> {
 	@Override
 	public Usuario buscar(Object[] chave) {
 		SQLiteDatabase dbLeitor = DBHelper.banco.getReadableDatabase();
-		Cursor cursor = dbLeitor.rawQuery("SELECT * FROM " + TABELA_USUARIO + " WHERE " + CODUSUARIO + "=" + chave[0], null);
-		
-		Usuario usuario = new Usuario(cursor.getInt(cursor.getColumnIndex(CODUSUARIO))
+		String sql = "SELECT * FROM " + TABELA_USUARIO + " WHERE ";
+				if(chave.length > 1){
+			 
+			 sql = sql + "usuario=" + chave[0] + " AND senha=" + chave[1];
+			 
+		 }
+		else{
+			
+			 sql = sql + CODUSUARIO + "=" + chave[0];
+			
+		}
+		Cursor cursor = dbLeitor.rawQuery(sql, null);
+		Usuario usuario = null;
+		if(cursor.getCount() > 0){
+			usuario = new Usuario(cursor.getInt(cursor.getColumnIndex(CODUSUARIO))
 				,cursor.getString(cursor.getColumnIndex(NOME))
 				,cursor.getInt(cursor.getColumnIndex(CODPERFIL))
 				,cursor.getString(cursor.getColumnIndex(USUARIO))
 				,cursor.getString(cursor.getColumnIndex(SENHA))
 				,cursor.getString(cursor.getColumnIndex(STATUS))
-				,Util.obtemData("",cursor.getString(cursor.getColumnIndex(DATACADASTRO)))
+				,Util.obtemData("yyyy-MM-dd HH:mm:ss.SSS",cursor.getString(cursor.getColumnIndex(DATACADASTRO)))
 				);
-		
+		}
+		else{
+			return usuario;
+		}
 		return usuario;
 	}
 

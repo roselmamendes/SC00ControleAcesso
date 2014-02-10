@@ -1,10 +1,9 @@
 package br.edu.uefs.cesic.sc00controleacesso.view;
 
 import br.edu.uefs.cesic.sc00controleacesso.R;
-import br.edu.uefs.cesic.sc00controleacesso.R.id;
-import br.edu.uefs.cesic.sc00controleacesso.R.layout;
-import br.edu.uefs.cesic.sc00controleacesso.R.menu;
-import br.edu.uefs.cesic.sc00controleacesso.R.string;
+import br.edu.uefs.cesic.sc00controleacesso.dao.Usuario;
+import br.edu.uefs.cesic.sc00controleacesso.model.DBHelper;
+import br.edu.uefs.cesic.sc00controleacesso.model.DBUsuario;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -52,6 +51,8 @@ public class AutenticacaoActivity extends Activity {
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
+	
+	private DBHelper banco;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +147,9 @@ public class AutenticacaoActivity extends Activity {
 			// form field with an error.
 			focusView.requestFocus();
 		} else {
+			
+			DBHelper.obtemInstancia(this);
+			
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
@@ -203,9 +207,8 @@ public class AutenticacaoActivity extends Activity {
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
 
-			try {
+			/*try {
 				// Simulate network access.
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
@@ -218,9 +221,15 @@ public class AutenticacaoActivity extends Activity {
 					// Account exists, return true if the password matches.
 					return pieces[1].equals(mPassword);
 				}
-			}
+			}*/
 
-			// TODO: register the new account here.
+			DBUsuario dbUsuario = new DBUsuario();
+			Object[] chave = {mEmail,mPassword};
+			Usuario usu = dbUsuario.buscar(chave);
+			if(usu == null){
+				
+			}
+			
 			return true;
 		}
 
